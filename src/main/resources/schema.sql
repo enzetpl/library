@@ -1,0 +1,10 @@
+CREATE TABLE book (
+    id BIGINT IDENTITY PRIMARY KEY,
+    title VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE author (
+    id BIGINT IDENTITY  PRIMARY KEY,
+    firstname VARCHAR(30),
+    lastname VARCHAR(30) NOT NULL
+);
