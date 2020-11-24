@@ -6,8 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import pl.pussy.library.model.Author;
 import pl.pussy.library.model.Book;
+import pl.pussy.library.model.ERole;
+import pl.pussy.library.model.Role;
 import pl.pussy.library.repository.AuthorRepository;
 import pl.pussy.library.repository.BookRepository;
+import pl.pussy.library.repository.RoleRepository;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +20,7 @@ public class DataLoader implements CommandLineRunner {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final RoleRepository roleRepository;
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -33,5 +37,7 @@ public class DataLoader implements CommandLineRunner {
         author.getBooks().add(book);
         authorRepository.save(author);
         author.getBooks().add(book1);
+        roleRepository.save(new Role(ERole.ROLE_USER));
+        roleRepository.save(new Role(ERole.ROLE_ADMIN));
     }
 }

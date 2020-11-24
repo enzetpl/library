@@ -31,6 +31,7 @@ public class Author {
        @JoinTable(name = "author_books",
             joinColumns = @JoinColumn(name = "books_id", referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name = "authors_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<Book> books = new HashSet<>();
 
     void removeBook(Book book) {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.pussy.library.exceptions.ResourceNotFoundException;
 import pl.pussy.library.model.Author;
 import pl.pussy.library.model.Book;
+import pl.pussy.library.model.BookCopy;
 import pl.pussy.library.repository.AuthorRepository;
 import pl.pussy.library.repository.BookRepository;
 
@@ -26,8 +27,9 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Optional<Book> getBookById(Long id) {
-        return bookRepository.findById(id);
+    public Book getBookById(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("book with id: " + id + " not found"));
     }
 
     @Transactional
@@ -36,5 +38,10 @@ public class BookService {
                 .orElseThrow(() -> new ResourceNotFoundException("Book with id: "+ id + " not found"));
         authorRepository.findAllByBooks(book).stream().forEach(author -> author.getBooks().remove(book));
         bookRepository.deleteById(id);
+    }
+
+    public Book getBookByCopy(BookCopy copy) {
+        return bookRepository.findByCopies(copy)
+                .orElseThrow(() -> new ResourceNotFoundException());
     }
 }

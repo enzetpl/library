@@ -29,7 +29,10 @@ public class Book {
     private String title;
     @ManyToMany(targetEntity = Author.class, mappedBy = "books", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     private Set<Author> authors = new HashSet<>();
-
+    @OneToMany
+    @JoinColumn(name = "book_id")
+    @JsonIgnore
+    private Set<BookCopy> copies;
     public void removeAuthor(Author author) {
         authors.remove(author);
         author.getBooks().remove(this);
